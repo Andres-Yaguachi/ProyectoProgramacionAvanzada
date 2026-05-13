@@ -111,8 +111,14 @@ public class LogicaRecepcion {
         }
         historial.setCodigoUnico(p);
         historial.setUbicacion(u);
+        
+        
+        objHEContr.create(historial);
+        
     }
     
-    public void recepcion 
+    public void recepcion(){
+        
+    }
 
 }

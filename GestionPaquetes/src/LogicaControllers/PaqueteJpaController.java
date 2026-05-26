@@ -25,6 +25,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -437,6 +438,26 @@ public class PaqueteJpaController implements Serializable {
         }
     }
 
+    public Paquete findPaquetexNroSeguimiento(String nroSeguimiento) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Paquete> query = em.createNamedQuery("Paquete.findByNroSeguimiento", Paquete.class);
+            //Pasamos el parámetro a la consulta
+            query.setParameter("nroSeguimiento", nroSeguimiento);
+            //Obtenemos los resultados. Usamos getResultList() por seguridad.
+            List<Paquete> resultados = query.getResultList();
+
+            //Verificamos si se encontró el paquete
+            if (!resultados.isEmpty()) {
+                return resultados.get(0); // Retorna el primer paquete
+            } else {
+                return null; // No se encontró ningún paquete con ese número
+            }
+        } finally {
+            em.close();
+        }
+    }
+
     public int getPaqueteCount() {
         EntityManager em = getEntityManager();
         try {
@@ -449,5 +470,5 @@ public class PaqueteJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

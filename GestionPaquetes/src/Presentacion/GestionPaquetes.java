@@ -14,7 +14,11 @@ public class GestionPaquetes {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+<<<<<<< Updated upstream
         // TODO code application logic here
+=======
+        java.awt.EventQueue.invokeLater(() ->new VistaPrincipal());
+>>>>>>> Stashed changes
     }
     
 }

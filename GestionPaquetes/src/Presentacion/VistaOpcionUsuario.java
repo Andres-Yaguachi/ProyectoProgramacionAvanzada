@@ -27,7 +27,11 @@ public class VistaOpcionUsuario extends JPanel {
         JButton btnPersonal = crearBotonGrande("PERSONAL", new Color(39, 174, 96));
 
         btnCliente.addActionListener(e -> base.cambiarVista("CLIENTE"));
+<<<<<<< Updated upstream
         btnPersonal.addActionListener(e -> base.cambiarVista("LOGIN"));
+=======
+        btnPersonal.addActionListener(e -> base.cambiarVista("SELECCION_PERSONAL"));
+>>>>>>> Stashed changes
 
         centro.add(btnCliente);
         centro.add(btnPersonal);

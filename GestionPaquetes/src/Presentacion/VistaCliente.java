@@ -1,5 +1,11 @@
 package Presentacion;
 
+<<<<<<< Updated upstream
+=======
+import Clases.*;
+import Logica.LogicaCliente;
+import java.util.List;
+>>>>>>> Stashed changes
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -8,6 +14,11 @@ public class VistaCliente extends JPanel {
 
     private JTextField txtSeguimiento;
     private DefaultTableModel modeloTabla;
+<<<<<<< Updated upstream
+=======
+    private VistaMensajesUsuario vmu = new VistaMensajesUsuario();
+    LogicaCliente logica = new LogicaCliente();
+>>>>>>> Stashed changes
 
     public VistaCliente(VistaPrincipal base) {
         setLayout(new BorderLayout());
@@ -36,8 +47,8 @@ public class VistaCliente extends JPanel {
         txtSeguimiento.setForeground(Color.WHITE);
         txtSeguimiento.setCaretColor(Color.WHITE);
         txtSeguimiento.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(46, 134, 222)),
-            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+                BorderFactory.createLineBorder(new Color(46, 134, 222)),
+                BorderFactory.createEmptyBorder(5, 8, 5, 8)
         ));
 
         JButton btnBuscar = new JButton("Buscar");
@@ -69,6 +80,7 @@ public class VistaCliente extends JPanel {
         btnBuscar.addActionListener(e -> {
             String nro = txtSeguimiento.getText().trim();
             if (nro.isEmpty()) {
+<<<<<<< Updated upstream
                 JOptionPane.showMessageDialog(this, "Ingrese un número de seguimiento", "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
@@ -76,6 +88,45 @@ public class VistaCliente extends JPanel {
             // Datos de prueba
             modeloTabla.addRow(new Object[]{"2025-05-13 08:00", "Receptado", "Local Norte", "Paquete ingresado"});
             modeloTabla.addRow(new Object[]{"2025-05-13 10:30", "En Tránsito", "Bodega Central", "En camino"});
+=======
+                vmu.advertencias("Ingrese un número de seguimiento.");
+                return;
+            }
+            modeloTabla.setRowCount(0);
+            try {
+                //Buscamos el paquete
+                Paquete paqueteEncontrado = logica.encontrarPaqueteXNro(nro);
+
+                if (paqueteEncontrado != null) {
+                    //Si existe, traemos su historial
+                    List<HistorialEstado> historial = logica.traerHisotrial(paqueteEncontrado);
+
+                    if (historial.isEmpty()) {
+                        vmu.informacion("El paquete existe, pero aún no tiene movimientos registrados.");
+                    } else {
+                        // Formateador para que la fecha se vea legible
+                        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+                        // 5. Recorremos el historial y agregamos filas a la tabla
+                        for (HistorialEstado he : historial) {
+                            String fecha = sdf.format(he.getFechaHora());
+                            String estado = he.getEstado();
+                            // Validamos que ubicación no sea nula para evitar NullPointerException
+                            String ubicacion = (he.getUbicacion() != null) ? he.getUbicacion().getNombre() : "N/A";
+                            String observaciones = he.getObservaciones();
+
+                            modeloTabla.addRow(new Object[]{fecha, estado, ubicacion, observaciones});
+                        }
+                    }
+                } else {
+                    vmu.error("No se encontró ningún paquete con el código: " + nro);
+                }
+
+            } catch (Exception ex) {
+                vmu.error("Error al consultar el historial: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+>>>>>>> Stashed changes
         });
 
         // Footer

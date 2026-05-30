@@ -34,6 +34,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Repartidor.findByEstado", query = "SELECT r FROM Repartidor r WHERE r.estado = :estado")})
 public class Repartidor implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "repartidor")
+    private Collection<AsignaPaquete> asignaPaqueteCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -138,6 +141,14 @@ public class Repartidor implements Serializable {
     @Override
     public String toString() {
         return "Clases.Repartidor[ idRepartidor=" + idRepartidor + " ]";
+    }
+
+    public Collection<AsignaPaquete> getAsignaPaqueteCollection() {
+        return asignaPaqueteCollection;
+    }
+
+    public void setAsignaPaqueteCollection(Collection<AsignaPaquete> asignaPaqueteCollection) {
+        this.asignaPaqueteCollection = asignaPaqueteCollection;
     }
     
 }

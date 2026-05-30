@@ -1,5 +1,7 @@
 package Presentacion;
 
+import Clases.*;
+import Logica.*;
 import java.awt.*;
 import javax.swing.*;
 
@@ -7,6 +9,8 @@ public class VistaLogin extends JPanel {
 
     private JTextField txtCedula;
     private JPasswordField txtPassword;
+
+    private LogicaAccesos logica = new LogicaAccesos();
 
     public VistaLogin(VistaPrincipal base) {
         setLayout(new BorderLayout());
@@ -52,6 +56,7 @@ public class VistaLogin extends JPanel {
 
         btnVolver.addActionListener(e -> base.cambiarVista("OPCION"));
         btnIngresar.addActionListener(e -> {
+<<<<<<< Updated upstream
             String cedula = txtCedula.getText().trim();
             String pass = new String(txtPassword.getPassword()).trim();
             // TODO: conectar con lógica de negocio
@@ -65,6 +70,66 @@ public class VistaLogin extends JPanel {
                 base.cambiarVista("REPARTIDOR");
             } else {
                 JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
+=======
+            String destino = base.getRolElegido();
+
+            if (destino == null || destino.isEmpty()) {
+                vmu.error("No se seleccionó un tipo de personal.");
+                return;
+            }
+
+            // Capturar datos del formulario
+            String cedula = txtCedula.getText().trim();
+            String password = new String(txtPassword.getPassword());
+
+            if (cedula.isEmpty() || password.isEmpty()) {
+                vmu.error("Por favor, ingrese su cédula y contraseña.");
+                return;
+            }
+            int tipo = 0;
+            switch (destino) {
+                case "REPARTIDOR":
+                    tipo = 1;
+                    break;
+                case "RECEPCIONISTA":
+                    tipo = 2;
+                    break;
+                case "OPERADOR":
+                    tipo = 3;
+                    break;
+                case "SUPERVISOR":
+                    tipo = 4;
+                    break;
+            }
+
+            Object usuarioLogueado = logica.cliente(cedula, password, tipo);
+
+            //Validamos y guardamos la sesión según el rol correspondiente
+            if (usuarioLogueado != null) {
+
+                switch (destino) {
+                    case "REPARTIDOR":
+                        base.setRepartidorLogueado((Repartidor) usuarioLogueado);
+                        break;
+                    case "RECEPCIONISTA":
+                        base.setRecepcionistaLogueado((Recepcionista) usuarioLogueado);
+                        break;
+                    case "OPERADOR":
+                        base.setOperadorLogueado((OperadorDespacho) usuarioLogueado);
+                        break;
+                    case "SUPERVISOR":
+                        base.setSupervisorLogueado((Supervisor) usuarioLogueado);
+                        break;
+                }
+
+                base.cambiarVista(destino);
+
+                txtCedula.setText("");
+                txtPassword.setText("");
+
+            } else {
+                vmu.error("Credenciales incorrectas o el usuario no corresponde a este rol.");
+>>>>>>> Stashed changes
             }
         });
 

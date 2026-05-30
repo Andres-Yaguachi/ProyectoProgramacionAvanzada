@@ -45,6 +45,9 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Paquete.findByDestinatarioTel", query = "SELECT p FROM Paquete p WHERE p.destinatarioTel = :destinatarioTel")})
 public class Paquete implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paquete")
+    private Collection<AsignaPaquete> asignaPaqueteCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -285,6 +288,14 @@ public class Paquete implements Serializable {
     @Override
     public String toString() {
         return "Clases.Paquete[ codigoUnico=" + codigoUnico + " ]";
+    }
+
+    public Collection<AsignaPaquete> getAsignaPaqueteCollection() {
+        return asignaPaqueteCollection;
+    }
+
+    public void setAsignaPaqueteCollection(Collection<AsignaPaquete> asignaPaqueteCollection) {
+        this.asignaPaqueteCollection = asignaPaqueteCollection;
     }
     
 }

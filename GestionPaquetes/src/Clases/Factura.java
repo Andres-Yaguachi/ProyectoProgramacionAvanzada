@@ -60,7 +60,7 @@ public class Factura implements Serializable {
     @Basic(optional = false)
     @Column(name = "total")
     private BigDecimal total;
-    @JoinColumn(name = "Paquete_codigo_unico", referencedColumnName = "codigo_unico")
+    @JoinColumn(name = "codigo_unico", referencedColumnName = "codigo_unico")
     @ManyToOne(optional = false)
     private Paquete paquetecodigounico;
 
@@ -160,5 +160,5 @@ public class Factura implements Serializable {
     public String toString() {
         return "Clases.Factura[ idFactura=" + idFactura + " ]";
     }
-    
+
 }

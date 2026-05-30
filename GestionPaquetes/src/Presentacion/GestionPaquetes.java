@@ -1,5 +1,6 @@
 package Presentacion;
 
+<<<<<<< Updated upstream
 import java.util.Date;
 
 /**
@@ -12,4 +13,12 @@ public class GestionPaquetes {
 
     }
 
+=======
+public class GestionPaquetes {
+
+    public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(() -> new VistaPrincipal());
+
+    }
+>>>>>>> Stashed changes
 }
